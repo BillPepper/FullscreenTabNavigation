@@ -1,26 +1,34 @@
 #pepper_tabBar {
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-auto-flow: column;
-  max-height: 30px;
+  background-color: #333;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  border-bottom: 5px solid salmon;
+  transform: translateY(-20px);
+  /* transform: translateY(0); */
+  transition: all 0.5s;
+  color: #999;
+  z-index: 999;
+  font-family: arial;
+  font-size: 15px;
+  line-height: 22.5px;
+  box-sizing: border-box;
 }
 
-#pepper_tabBar > a.active {
-  background-color: #999;
-  color: #333;
+#pepper_tabBar.active {
+  transition: all 0.3s;
+  transform: translateY(0);
+  border-bottom: 2px solid salmon;
 }
 
 #pepper_tabBar > a {
-  color: #999;
-  border-left: 1px solid #999;
-  border-right: 1px solid #999;
-  padding: 5px;
-  height: 20px;
-  line-height: 10px;
-  text-decoration: none;
+  padding: 0 10px;
+  border-right: 2px solid #999;
 }
 
-#pepper_tabBar > a:hover {
-  background-color: #555;
-  cursor: pointer;
+#pepper_tabBar > a:first-child {
+  background-color: #999;
+  color: #333;
 }

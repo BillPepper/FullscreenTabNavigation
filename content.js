@@ -18,4 +18,12 @@ const addTab = tab => {
   tabBar.appendChild(newTab);
 };
 
+tabBar.addEventListener("mouseenter", () => {
+  tabBar.classList.add("active");
+});
+
+// tabBar.addEventListener("mouseleave", () => {
+//   tabBar.classList.remove("active");
+// });
+
 fakeTabs.map(tab => addTab(tab));

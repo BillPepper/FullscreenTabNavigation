@@ -18,12 +18,18 @@ const addTab = tab => {
   tabBar.appendChild(newTab);
 };
 
+const receiveMessage = msg => {
+  console.log("content got message", msg);
+};
+
 tabBar.addEventListener("mouseenter", () => {
   tabBar.classList.add("active");
 });
 
-// tabBar.addEventListener("mouseleave", () => {
-//   tabBar.classList.remove("active");
-// });
+tabBar.addEventListener("mouseleave", () => {
+  tabBar.classList.remove("active");
+});
 
 fakeTabs.map(tab => addTab(tab));
+const port = chrome.runtime.connect({ name: "pepper_port" });
+port.onMessage.addListener(receiveMessage);

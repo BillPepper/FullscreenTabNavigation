@@ -12,6 +12,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 const handleNewTab = tab => {
   console.log("new tab", tab);
+  chrome.tabs.getAllInWindow(tab.windowId, t => {
+    console.table(t);
+  });
   chrome.runtime.sendMessage("runContentScript");
 };
 

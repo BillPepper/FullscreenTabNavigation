@@ -2,7 +2,7 @@ const tabBar = document.createElement("div");
 tabBar.id = "pepper_tabBar";
 document.body.prepend(tabBar);
 
-const disableRetracton = true;
+const disableRetracton = false;
 let barEnabled = false;
 
 let fakeTabs = [

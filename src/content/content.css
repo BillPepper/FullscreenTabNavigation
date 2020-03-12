@@ -5,8 +5,8 @@
   left: 0;
   width: 100%;
   height: 25px;
-  border-bottom: 5px solid salmon;
-  transform: translateY(-20px);
+  border-bottom: 2px solid salmon;
+  transform: translateY(-23px);
   /* transform: translateY(0); */
   transition: all 0.5s;
   color: #999;
@@ -20,7 +20,7 @@
 #pepper_tabBar.active {
   transition: all 0.3s;
   transform: translateY(0);
-  border-bottom: 2px solid salmon;
+  border-bottom: 1px solid salmon;
 }
 
 #pepper_tabBar > a {
@@ -39,10 +39,16 @@
 }
 
 div#pepper_tabBar > a {
+  color: #999;
   display: inline-block;
   width: 200px;
   height: 23px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+div#pepper_tabBar > a:hover {
+  text-decoration: none;
+  background-color: #555;
 }

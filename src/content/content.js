@@ -2,11 +2,27 @@ const tabBar = document.createElement("div");
 tabBar.id = "pepper_tabBar";
 document.body.prepend(tabBar);
 
+let barEnabled = false;
+
 const fakeTabs = [
   { title: "GitHub" },
   { title: "Stack Overflow" },
   { title: "Twitter" }
 ];
+
+const setBarEnabled = bool => {
+  console.log("set bar", bool);
+  if (bool) {
+    tabBar.classList.add("active");
+  } else {
+    tabBar.classList.remove("active");
+  }
+};
+
+const toggleBar = () => {
+  barEnabled = !barEnabled;
+  setBarEnabled(barEnabled);
+};
 
 const addTab = tab => {
   const newTab = document.createElement("a");
@@ -23,11 +39,17 @@ const receiveMessage = msg => {
 };
 
 tabBar.addEventListener("mouseenter", () => {
-  tabBar.classList.add("active");
+  setBarEnabled(true);
 });
 
 tabBar.addEventListener("mouseleave", () => {
-  tabBar.classList.remove("active");
+  setBarEnabled(false);
+});
+
+document.addEventListener("keydown", e => {
+  if (e.keyCode === 18) {
+    toggleBar();
+  }
 });
 
 fakeTabs.map(tab => addTab(tab));

@@ -11,7 +11,6 @@ const fakeTabs = [
 ];
 
 const setBarEnabled = bool => {
-  console.log("set bar", bool);
   if (bool) {
     tabBar.classList.add("active");
   } else {

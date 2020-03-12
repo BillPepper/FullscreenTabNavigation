@@ -7,14 +7,20 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 let contentPort = null;
 
 const handleNewTab = tab => {
-  // chrome.tabs.getAllInWindow(tab.windowId, t => {
-  //   console.table(t);
-  // });
   if (contentPort) {
     contentPort.postMessage("hello, from background");
   } else {
     console.log("content port not open");
   }
+};
+
+const handleUpdateTabs = tabId => {
+  chrome.tabs.query({ windowId: tabId }, tabs => {
+    if (contentPort) {
+      console.log("have tabs", tabs);
+      contentPort.postMessage({ type: "unknow", tabs: tabs });
+    }
+  });
 };
 
 const handleCloseTab = tab => {
@@ -24,6 +30,10 @@ const handleCloseTab = tab => {
 chrome.tabs.onCreated.addListener(tab => {
   handleNewTab(tab);
 });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
+  handleUpdateTabs(tab.windowId)
+);
 
 chrome.tabs.onRemoved.addListener(tab => {
   handleCloseTab(tab);

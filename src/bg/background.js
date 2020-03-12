@@ -18,7 +18,7 @@ const handleUpdateTabs = tabId => {
   chrome.tabs.query({ windowId: tabId }, tabs => {
     if (contentPort) {
       console.log("have tabs", tabs);
-      contentPort.postMessage({ type: "unknow", tabs: tabs });
+      contentPort.postMessage({ type: "tablist", tabs: tabs });
     }
   });
 };

@@ -2,9 +2,10 @@ const tabBar = document.createElement("div");
 tabBar.id = "pepper_tabBar";
 document.body.prepend(tabBar);
 
+const disableRetracton = true;
 let barEnabled = false;
 
-const fakeTabs = [
+let fakeTabs = [
   { title: "GitHub" },
   { title: "Stack Overflow" },
   { title: "Twitter" }
@@ -24,17 +25,32 @@ const toggleBar = () => {
 };
 
 const addTab = tab => {
-  const newTab = document.createElement("a");
-  newTab.innerText = tab.title;
-  if (tab.title === "GitHub") {
-    newTab.classList.add("active");
-    console.log("found active tab");
-  }
+  let newTab = document.createElement("a");
+  let newTabFavIcon = document.createElement("img");
+  let newTabText = document.createElement("span");
+
+  newTabFavIcon.src = "https://github.githubassets.com/favicon.ico";
+  newTabFavIcon.classList.add("favIcon");
+  newTabText.innerText = tab.title;
+
+  newTab.append(newTabFavIcon);
+  newTab.append(newTabText);
   tabBar.appendChild(newTab);
 };
 
+const clearTabs = () => {
+  tabBar.innerHTML = "";
+};
+
 const receiveMessage = msg => {
-  console.log("content got message", msg);
+  if (msg.type === "tablist") {
+    fakeTabs = [];
+    console.log("content: got new tablist");
+    clearTabs();
+    msg.tabs.forEach(tab => {
+      addTab({ title: tab.title });
+    });
+  }
 };
 
 tabBar.addEventListener("mouseenter", () => {
@@ -42,7 +58,9 @@ tabBar.addEventListener("mouseenter", () => {
 });
 
 tabBar.addEventListener("mouseleave", () => {
-  setBarEnabled(false);
+  if (!disableRetracton) {
+    setBarEnabled(false);
+  }
 });
 
 document.addEventListener("keydown", e => {

@@ -32,3 +32,17 @@
   background-color: #999;
   color: #333;
 }
+
+#pepper_tabBar > a > .favIcon {
+  width: 16px;
+  margin-right: 5px;
+}
+
+div#pepper_tabBar > a {
+  display: inline-block;
+  width: 200px;
+  height: 23px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

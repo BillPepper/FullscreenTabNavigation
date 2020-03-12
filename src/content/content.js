@@ -29,7 +29,7 @@ const addTab = tab => {
   let newTabFavIcon = document.createElement("img");
   let newTabText = document.createElement("span");
 
-  newTabFavIcon.src = "https://github.githubassets.com/favicon.ico";
+  newTabFavIcon.src = tab.favIcon;
   newTabFavIcon.classList.add("favIcon");
   newTabText.innerText = tab.title;
 
@@ -48,7 +48,7 @@ const receiveMessage = msg => {
     console.log("content: got new tablist");
     clearTabs();
     msg.tabs.forEach(tab => {
-      addTab({ title: tab.title });
+      addTab({ title: tab.title, favIcon: tab.favIconUrl });
     });
   }
 };

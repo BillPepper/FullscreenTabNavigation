@@ -14,11 +14,11 @@ const handleNewTab = tab => {
   }
 };
 
-const handleUpdateTabs = tabId => {
-  chrome.tabs.query({ windowId: tabId }, tabs => {
+const handleUpdateTabs = winId => {
+  chrome.tabs.query({ windowId: winId }, tabs => {
     if (contentPort) {
       console.log("have tabs", tabs);
-      contentPort.postMessage({ type: "tablist", tabs: tabs });
+      contentPort.postMessage({ type: "tablist", windowId: winId, tabs: tabs });
     }
   });
 };

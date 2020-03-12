@@ -11,6 +11,8 @@ let fakeTabs = [
   { title: "Twitter" }
 ];
 
+let thisWinId = undefined;
+
 const setBarEnabled = bool => {
   if (bool) {
     tabBar.classList.add("active");
@@ -44,12 +46,17 @@ const clearTabs = () => {
 
 const receiveMessage = msg => {
   if (msg.type === "tablist") {
-    fakeTabs = [];
-    console.log("content: got new tablist");
-    clearTabs();
-    msg.tabs.forEach(tab => {
-      addTab({ title: tab.title, favIcon: tab.favIconUrl });
-    });
+    if (!thisWinId) {
+      thisWinId = msg.windowId;
+    }
+    if (thisWinId === msg.windowId) {
+      fakeTabs = [];
+      console.log("content: got new tablist");
+      clearTabs();
+      msg.tabs.forEach(tab => {
+        addTab({ title: tab.title, favIcon: tab.favIconUrl });
+      });
+    }
   }
 };
 

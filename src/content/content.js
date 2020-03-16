@@ -1,23 +1,24 @@
-const tabBar = document.createElement("div");
-tabBar.id = "pepper_tabBar";
+/* eslint-disable no-undef */
+const tabBar = document.createElement('div');
+tabBar.id = 'pepper_tabBar';
 document.body.prepend(tabBar);
 
 const disableRetracton = true;
 let barEnabled = false;
 
 let fakeTabs = [
-  { title: "GitHub" },
-  { title: "Stack Overflow" },
-  { title: "Twitter" }
+  { title: 'GitHub' },
+  { title: 'Stack Overflow' },
+  { title: 'Twitter' }
 ];
 
 let thisWinId = undefined;
 
 const setBarEnabled = bool => {
   if (bool) {
-    tabBar.classList.add("active");
+    tabBar.classList.add('active');
   } else {
-    tabBar.classList.remove("active");
+    tabBar.classList.remove('active');
   }
 };
 
@@ -27,12 +28,12 @@ const toggleBar = () => {
 };
 
 const addTab = tab => {
-  let newTab = document.createElement("a");
-  let newTabFavIcon = document.createElement("img");
-  let newTabText = document.createElement("span");
+  let newTab = document.createElement('a');
+  let newTabFavIcon = document.createElement('img');
+  let newTabText = document.createElement('span');
 
   newTabFavIcon.src = tab.favIcon;
-  newTabFavIcon.classList.add("favIcon");
+  newTabFavIcon.classList.add('favIcon');
   newTabText.innerText = tab.title;
 
   newTab.append(newTabFavIcon);
@@ -41,17 +42,17 @@ const addTab = tab => {
 };
 
 const clearTabs = () => {
-  tabBar.innerHTML = "";
+  tabBar.innerHTML = '';
 };
 
 const receiveMessage = msg => {
-  if (msg.type === "tablist") {
+  if (msg.type === 'tablist') {
     if (!thisWinId) {
       thisWinId = msg.windowId;
     }
     if (thisWinId === msg.windowId) {
       fakeTabs = [];
-      console.log("content: got new tablist");
+      console.log('content: got new tablist');
       clearTabs();
       msg.tabs.forEach(tab => {
         addTab({ title: tab.title, favIcon: tab.favIconUrl });
@@ -60,22 +61,22 @@ const receiveMessage = msg => {
   }
 };
 
-tabBar.addEventListener("mouseenter", () => {
+tabBar.addEventListener('mouseenter', () => {
   setBarEnabled(true);
 });
 
-tabBar.addEventListener("mouseleave", () => {
+tabBar.addEventListener('mouseleave', () => {
   if (!disableRetracton) {
     setBarEnabled(false);
   }
 });
 
-document.addEventListener("keydown", e => {
+document.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
     toggleBar();
   }
 });
 
 fakeTabs.map(tab => addTab(tab));
-const port = chrome.runtime.connect({ name: "pepper_port" });
+const port = chrome.runtime.connect({ name: 'pepper_port' });
 port.onMessage.addListener(receiveMessage);

@@ -1,30 +1,31 @@
+/* eslint-disable no-undef */
 //example of using a message handler from the inject scripts
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log("background received message", request, sender);
+  console.log('background received message', request, sender);
   sendResponse();
 });
 
 let contentPort = null;
 
-const handleNewTab = tab => {
+const handleNewTab = () => {
   if (contentPort) {
-    contentPort.postMessage("hello, from background");
+    contentPort.postMessage('hello, from background');
   } else {
-    console.log("content port not open");
+    console.log('content port not open');
   }
 };
 
 const handleUpdateTabs = winId => {
   chrome.tabs.query({ windowId: winId }, tabs => {
     if (contentPort) {
-      console.log("have tabs", tabs);
-      contentPort.postMessage({ type: "tablist", windowId: winId, tabs: tabs });
+      console.log('have tabs', tabs);
+      contentPort.postMessage({ type: 'tablist', windowId: winId, tabs: tabs });
     }
   });
 };
 
 const handleCloseTab = tab => {
-  console.log("closed tab", tab);
+  console.log('closed tab', tab);
 };
 
 chrome.tabs.onCreated.addListener(tab => {
@@ -40,12 +41,12 @@ chrome.tabs.onRemoved.addListener(tab => {
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
-  if (port.name === "pepper_port") {
-    console.log("port opened!");
+  if (port.name === 'pepper_port') {
+    console.log('port opened!');
     contentPort = port;
 
     contentPort.onDisconnect.addListener(function(msg) {
-      console.log("port closed!", msg);
+      console.log('port closed!', msg);
       contentPort = null;
     });
   }

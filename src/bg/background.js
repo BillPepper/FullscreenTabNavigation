@@ -19,17 +19,17 @@ const switchTab = tabId => {
   });
 };
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
-  handleUpdateTabs(tab.windowId)
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) =>
+  handleUpdateTabs(changeInfo)
 );
 
-chrome.tabs.onRemoved.addListener(tab => {
-  handleCloseTab(tab);
+chrome.tabs.onRemoved.addListener((tabId, changeInfo, tab) => {
+  handleCloseTab(changeInfo);
 });
 
 chrome.runtime.onConnect.addListener(port => {
   if (port.name === 'pepper_port') {
-    console.log('port opened!');
+    console.log('port opened!', port);
     contentPort = port;
 
     contentPort.onMessage.addListener(msg => {

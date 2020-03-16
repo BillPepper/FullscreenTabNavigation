@@ -16,7 +16,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*"],
+      "matches": ["https://*/*", "http://*/*"],
       "js": ["src/content/content.js"],
       "css": ["src/content/content.css"]
     }

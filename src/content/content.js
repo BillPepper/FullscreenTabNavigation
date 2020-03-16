@@ -52,7 +52,6 @@ const handleNewTablist = msg => {
   }
   if (thisWinId === msg.windowId) {
     tabs = [];
-    console.log('content: got new tablist');
     clearTabs();
     msg.tabs.forEach(tab => {
       addTab({ title: tab.title, id: tab.id, favIcon: tab.favIconUrl });

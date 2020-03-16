@@ -29,6 +29,9 @@ const addTab = tab => {
 
   newTab.addEventListener('click', () => {
     console.log('you clicked tab with id', tab.id);
+    if (port) {
+      port.postMessage({ type: 'tabclick', tabId: tab.id });
+    }
   });
   newTabFavIcon.src = tab.favIcon;
   newTabFavIcon.classList.add('favIcon');

@@ -27,6 +27,9 @@ const addTab = tab => {
   let newTabFavIcon = document.createElement('img');
   let newTabText = document.createElement('span');
 
+  newTab.addEventListener('click', () => {
+    console.log('you clicked tab with id', tab.id);
+  });
   newTabFavIcon.src = tab.favIcon;
   newTabFavIcon.classList.add('favIcon');
   newTabText.innerText = tab.title;
@@ -40,19 +43,23 @@ const clearTabs = () => {
   tabBar.innerHTML = '';
 };
 
+const handleNewTablist = msg => {
+  if (!thisWinId) {
+    thisWinId = msg.windowId;
+  }
+  if (thisWinId === msg.windowId) {
+    tabs = [];
+    console.log('content: got new tablist');
+    clearTabs();
+    msg.tabs.forEach(tab => {
+      addTab({ title: tab.title, id: tab.id, favIcon: tab.favIconUrl });
+    });
+  }
+};
+
 const receiveMessage = msg => {
   if (msg.type === 'tablist') {
-    if (!thisWinId) {
-      thisWinId = msg.windowId;
-    }
-    if (thisWinId === msg.windowId) {
-      tabs = [];
-      console.log('content: got new tablist');
-      clearTabs();
-      msg.tabs.forEach(tab => {
-        addTab({ title: tab.title, favIcon: tab.favIconUrl });
-      });
-    }
+    handleNewTablist(msg);
   }
 };
 

@@ -1,5 +1,7 @@
 # Chrome Fullscreen Tab Navigation
 
+### This version is still in development and does not really work yet!
+
 ## Usage
 - Clone the Git repo
 - Set Chrome to Dev-Mode

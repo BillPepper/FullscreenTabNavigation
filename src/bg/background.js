@@ -1,19 +1,4 @@
-/* eslint-disable no-undef */
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log('background received message', request, sender);
-  sendResponse();
-});
-
 let contentPort = null;
-
-const handleNewTab = () => {
-  if (contentPort) {
-    contentPort.postMessage('hello, from background');
-  } else {
-    console.log('content port not open');
-  }
-};
 
 const handleUpdateTabs = winId => {
   chrome.tabs.query({ windowId: winId }, tabs => {
@@ -27,10 +12,6 @@ const handleUpdateTabs = winId => {
 const handleCloseTab = tab => {
   console.log('closed tab', tab);
 };
-
-chrome.tabs.onCreated.addListener(tab => {
-  handleNewTab(tab);
-});
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
   handleUpdateTabs(tab.windowId)

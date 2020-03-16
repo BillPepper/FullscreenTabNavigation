@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const tabBar = document.createElement('div');
 tabBar.id = 'pepper_tabBar';
 document.body.prepend(tabBar);
@@ -6,11 +5,7 @@ document.body.prepend(tabBar);
 const disableRetracton = true;
 let barEnabled = false;
 
-let fakeTabs = [
-  { title: 'GitHub' },
-  { title: 'Stack Overflow' },
-  { title: 'Twitter' }
-];
+let tabs = [];
 
 let thisWinId = undefined;
 
@@ -51,7 +46,7 @@ const receiveMessage = msg => {
       thisWinId = msg.windowId;
     }
     if (thisWinId === msg.windowId) {
-      fakeTabs = [];
+      tabs = [];
       console.log('content: got new tablist');
       clearTabs();
       msg.tabs.forEach(tab => {
@@ -77,6 +72,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-fakeTabs.map(tab => addTab(tab));
+tabs.map(tab => addTab(tab));
 const port = chrome.runtime.connect({ name: 'pepper_port' });
 port.onMessage.addListener(receiveMessage);
